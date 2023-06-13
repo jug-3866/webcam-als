@@ -30,14 +30,11 @@ while True:
     camera = set_camera_exposure(camera_index, exposure_value)
     ret, frame = camera.read()
     camera.release()
+    if ret:
+        brightness = calculate_brightness(frame)
+        print("Relative brightness:", brightness)
+        set_laptop_brightness(brightness)
 
-    if not ret:
-        print("Failed to capture image")
-        break
-
-    brightness = calculate_brightness(frame)
-    print("Relative brightness:", brightness)
-    set_laptop_brightness(brightness)
 
     camera.set(cv2.CAP_PROP_EXPOSURE, exposure_value)
     time.sleep(interval)
