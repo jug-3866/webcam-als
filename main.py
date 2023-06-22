@@ -11,12 +11,12 @@ def calculate_brightness(image):
     average_brightness = cv2.mean(image)[0] / 255.0
     return average_brightness
 def set_laptop_brightness(brightness):
-    brightness = int((brightness * 100)+brightness_bump)
+    brightness = brightness +brightness_bump
     wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness, 0)
 
 brightness_bump = 0 #Adjust to bump the brightness up/down. 
 camera_index = 1  #Select camera
-exposure_value = -5  #Use in conjuction with brightness_bump. A lower number means lower brightness.
+exposure_value = -3  #Use in conjuction with brightness_bump. A lower number means lower brightness.
 interval = 1  # Interval between capturing images excluding camera initialization time
 
 
@@ -25,8 +25,8 @@ while True:
     ret, frame = camera.read()
     camera.release()
     if ret:
-        brightness = calculate_brightness(frame)
-        print("Relative brightness:", brightness)
+        brightness = calculate_brightness(frame) * 100
+        print("Relative brightness:", "{:.2f}".format(round(brightness, 4)) + "%")
         set_laptop_brightness(brightness)
 
     camera.set(cv2.CAP_PROP_EXPOSURE, exposure_value)
