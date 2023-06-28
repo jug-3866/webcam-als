@@ -29,6 +29,5 @@ while True:
         print("Relative brightness:", "{:.2f}".format(round(brightness, 4)) + "%")
         set_laptop_brightness(brightness)
 
-    camera.set(cv2.CAP_PROP_EXPOSURE, exposure_value)
     time.sleep(interval)
 
