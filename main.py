@@ -11,12 +11,12 @@ def calculate_brightness(image):
     average_brightness = cv2.mean(image)[0] / 255.0
     return average_brightness
 def set_laptop_brightness(brightness):
-    brightness = brightness +brightness_bump
+    brightness = brightness +brightness_offset
     wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness, 0)
 
-brightness_bump = 0 #Adjust to bump the brightness up/down. 
+brightness_offset = 0 #Adjust to offset the brightness up/down. 
 camera_index = 1  #Select camera
-exposure_value = -3  #Use in conjuction with brightness_bump. A lower number means lower brightness.
+exposure_value = -3  #Use in conjuction with brightness_offset. A lower number means lower brightness.
 interval = 1  # Interval between capturing images excluding camera initialization time
 
 
